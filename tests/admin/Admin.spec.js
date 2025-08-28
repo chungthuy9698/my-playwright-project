@@ -28,7 +28,11 @@ test.describe('Admin Page Tests', () => {
 
 
 
-test('[@smoke] TC_00: Add a new System Users', async ({ loggedInPage }) => {
+test('[@smoke] TC_002: Add a new System Users', async ({ loggedInPage }) => {
+    await setupTestUser(loggedInPage);
+});
+
+test('[@smoke] TC_003: Test with git checkout feature/admin-test ', async ({ loggedInPage }) => {
     await setupTestUser(loggedInPage);
 });
 
