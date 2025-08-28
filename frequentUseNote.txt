@@ -1,0 +1,7 @@
+1. Tìm giá trị input trên Console tab bằng js
+
+---  document.querySelector('input[name="firstName"]').value
+
+tương đương với:
+
+---  await page.locator('input[name="firstName"]).inputValue();
