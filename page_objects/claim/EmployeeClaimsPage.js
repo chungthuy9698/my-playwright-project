@@ -1,17 +1,20 @@
 import { BasePage } from '../BasePage';
 import { NotificationHelper } from '../../helper/NotificationHelper';
+import { AssignClaimPage } from './AssignClaimPage';
 
 export class EmployeeClaimsPage extends BasePage {
     constructor(page) {
         super(page);
         this.page = page;
         this.employeeNameTextbox = page.locator("//label[normalize-space()='Employee Name']/parent::div/following-sibling::div//input");
+        this.suggestedEmployeeName = page.locator('div[role="listbox"] span')
         this.referenceIdTextbox = page.locator("//label[normalize-space()='Reference Id']/parent::div/following-sibling::div//input");
         this.eventNameDropdown = page.locator("//label[normalize-space()='Event Name']/parent::div/following-sibling::div/div");
         this.fromDateCalendar = page.locator("//label[normalize-space()='From Date']/parent::div/following-sibling::div//input");
         this.columnHeader = 'div.oxd-table-header-cell';
         this.bodyRow = page.locator('//div[@class="oxd-table-body"]//div[@role="row"]');
         this.seachButton = page.locator('button.orangehrm-left-space');
+        this.viewDetailsButton = page.locator('div.oxd-table-card>div[role="row"]>div[role="cell"] button');
     }
 
     async selectEvenNameItem(dropdowmItemName) {
@@ -69,5 +72,18 @@ export class EmployeeClaimsPage extends BasePage {
             }
         }
         return false;
+    }
+
+    async searchEmployeeClaimByEmployeeName(inputValue, expectedValue) {
+        await this.searchAndSelectASuggestItem(this.employeeNameTextbox, this.suggestedEmployeeName, inputValue, expectedValue);
+        await this.clickToSearchButton();
+    }
+
+    async viewDetailsOfAnEmployeeClaim() {
+        await Promise.all([
+            this.page.waitForLoadState('networkidle'),
+            this.viewDetailsButton.nth(0).click()
+        ]);
+        return new AssignClaimPage(this.page);
     }
 }
