@@ -5,3 +5,13 @@
 tương đương với:
 
 ---  await page.locator('input[name="firstName"]).inputValue();
+
+2. Hàm Allure	Mục đích
+
+step(title, fn):    	Ghi lại từng bước trong báo cáo
+label(name, value): 	Gắn nhãn như feature, severity, owner
+description(text):      Mô tả chi tiết cho test case
+
+3. Tạo và mở báo cáo HTML
+-- Chạy lệnh sau để tạo báo cáo từ thư mục: allure generate allure-results --clean -o allure-report
+-- Mở báo cáo: allure open allure-report

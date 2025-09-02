@@ -25,7 +25,7 @@ export default defineConfig({
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: [['html'], ['allure-playwright']],
   // Thêm globalSetup để khởi login trước khi chạy test
-  globalSetup: './global-setup.js',
+  // globalSetup: './global-setup.js',
 
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
@@ -36,7 +36,7 @@ export default defineConfig({
     trace: 'on-first-retry',
     headless: false,
     // Sử dụng session đã lưu
-    storageState: 'storage/state.json',
+    // storageState: 'storage/state.json',
   },
 
   /* Configure projects for major browsers */

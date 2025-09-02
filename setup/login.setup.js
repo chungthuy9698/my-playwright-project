@@ -33,5 +33,5 @@ if (!fs.existsSync('storage')) {
 
     // Lưu trạng thái đăng nhập vào file state.json node  setup/login.setup.js
     await context.storageState({ path: 'storage/state.json' });
-    await browser.close();
+    await browser.close(); 
 })();
