@@ -7,7 +7,7 @@ import { mainNavigationOption } from '../../helper/mainNavigationOption';
 
 const eventName = 'Accommodation';
 
-test.describe('[Smoke]] Employee Claims', () => {
+test.describe('[@regression] Employee Claims', () => {
     test('TC_001: Search Employee Claims successfully', async ({ loggedInPage }) => {
         const employeeClaimsPage = await navigateMainMenuItem(loggedInPage, mainNavigationOption.CLAIM);
         await employeeClaimsPage.selectEvenNameItem(eventName);

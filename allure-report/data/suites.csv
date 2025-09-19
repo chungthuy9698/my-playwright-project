@@ -1,0 +1,4 @@
+"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
+"Assign a new claim to an employee","5494","TC_002: Assign a Claim to an employee successfully","chromium","Tue Sep 02 15:35:42 ICT 2025","failed","Tue Sep 02 15:35:47 ICT 2025"," Employee Claims","claim\Claim.spec.js","",""
+"Upload và chỉnh sửa file Excel trong trang My Info","4666","TC_001: Verify Excel upload & update","chromium","Mon Aug 25 21:33:38 ICT 2025","failed","Mon Aug 25 21:33:43 ICT 2025","Update Personal Details in My Info","myInfo\update_personal_details.spec.js","",""
+"Add an new Event in the Claim Configuration page","9250","TC_001: Add an Event successfully","chromium","Tue Sep 02 15:35:42 ICT 2025","passed","Tue Sep 02 15:35:51 ICT 2025"," Employee Claims","claim\Claim.spec.js","",""

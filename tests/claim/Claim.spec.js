@@ -8,7 +8,7 @@ import { claimMenuItems } from '../../helper/menuItems/claimMenuItems.js';
 
 
 test.describe(' Employee Claims', () => {
-    test('TC_001: Add an Event successfully', async ({ loggedInPage }) => {
+    test('[@regression] TC_001: Add an Event successfully', async ({ loggedInPage }) => {
         await navigateMainMenuItem(loggedInPage, mainNavigationOption.CLAIM);
         const configurationPage = await navigateToClaimConfigurationPageMenuItem(loggedInPage, claimMenuItems.CONFIGURATION_EVENTS);
         await configurationPage.addNewEvent('Accommodation', 'This is a test event description created by automation!!!');

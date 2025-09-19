@@ -14,7 +14,7 @@ test.describe('Admin Page Tests', () => {
         newUserData = await setupTestUser(loggedInPage);
     });
 
-    test('[@smoke] TC_001: Search System Users with records returns', async ({ loggedInPage }) => {
+    test('[@regression] TC_001: Search System Users with records returns', async ({ loggedInPage }) => {
         await navigateMainMenuItem(loggedInPage, mainNavigationOption.ADMIN);
         const userManagementPage = await navigateToUserManagementItem(loggedInPage, 'User Management', userManagamentDropdownItems.USERS);
         await userManagementPage.selectUserRoleOption(userRole[0]);
