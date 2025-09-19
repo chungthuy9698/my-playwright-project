@@ -6,7 +6,8 @@
   "scripts": {
     "test": "npx playwright test",
     "debug": "npx playwright test --debug",
-    "report": "npx playwright show-report"
+    "report": "npx playwright show-report", 
+    "regression": "npx playwright test tests --grep \"@regression\" --project=chromium  --reporter=html"
   },
   "keywords": [],
   "author": "",
