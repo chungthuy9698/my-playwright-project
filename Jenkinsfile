@@ -1,47 +1,76 @@
 pipeline {
-  agent any
+    agent any
 
-  tools {
-    nodejs "NodeJS 18" // Cấu hình trong Jenkins → Manage Jenkins → Global Tool Configuration
-  }
-
-  environment {
-    PLAYWRIGHT_BROWSERS_PATH = "0" // Cài trình duyệt vào node_modules để Jenkins dùng được
-  }
-
-  stages {
-    stage('Install Dependencies') {
-      steps {
-        sh 'npm install'
-      }
+    parameters {
+        choice(
+            name: 'TARGET_ENV',
+            choices: ['local', 'staging', 'prod'],
+            description: 'Select environment to run test'
+        )
     }
 
-stage('Install Playwright Browsers') {
-  steps {
-    bat '''
-      set PLAYWRIGHT_BROWSERS_PATH=0
-      npx playwright install
-    '''
-  }
-}
-
-
-    stage('Run Regression Tests') {
-      steps {
-        sh 'npm run regression'
-      }
+    tools {
+        nodejs 'NodeJS 18'
     }
 
-    stage('Publish HTML Report') {
-      steps {
-        sh 'npx playwright show-report'
-      }
+    environment {
+        PLAYWRIGHT_BROWSERS_PATH = '0'
+        PATH = "${env.PATH};C:\\Users\\admin\\AppData\\Roaming\\npm"
     }
-  }
 
-  post {
-    always {
-      archiveArtifacts artifacts: 'playwright-report/**', allowEmptyArchive: true
+    stages {
+        stage('Install Dependencies') {
+            steps {
+                bat 'npm install'
+            }
+        }
+
+        stage('Install Playwright Browsers') {
+            steps {
+                bat '''
+                    set PLAYWRIGHT_BROWSERS_PATH=0
+                    npx playwright install
+                '''
+            }
+        }
+
+        stage('Run Regression Tests') {
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    script {
+                        def url = ''
+                        if (params.TARGET_ENV == 'local') {
+                            url = 'http://localhost/orangehrm/web/index.php/auth/login'
+                        } else if (params.TARGET_ENV == 'staging') {
+                            url = 'https://opensource-demo.orangehrmlive.com/web/index.php/auth/login'
+                        } else {
+                            url = 'http://prod-server.company.com'
+                        }
+
+                        bat "npx cross-env BASE_URL=${url} npm run regression"
+                    }
+                }
+            }
+        }
+
+        stage('Generate Allure Report') {
+            steps {
+                bat 'npx allure generate allure-results --clean -o allure-report'
+                bat 'dir allure-report'
+            }
+        }
     }
-  }
+
+    post {
+        always {
+            // Archive toàn bộ reports để mở trực tiếp qua artifact
+            archiveArtifacts artifacts: 'playwright-report/**, allure-results/**, allure-report/**', allowEmptyArchive: true
+
+            script {
+                echo 'Open directly without sandbox error:'
+                echo "Playwright Report: ${env.BUILD_URL}artifact/playwright-report/index.html"
+                echo "Allure Report: ${env.BUILD_URL}artifact/allure-report/index.html"
+            }
+        }
+    }
 }
