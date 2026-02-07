@@ -69,7 +69,7 @@ export class BasePage {
 
     async selectDropDown(elementParent, childElements, childValue) {
         await elementParent.click();
-        await childElements.first().isVisible();
+        await childElements.first().waitFor({ state: 'visible', timeout: 8000 });;
         const count = await childElements.count();
 
         for (let i = 0; i < count; i++) {
